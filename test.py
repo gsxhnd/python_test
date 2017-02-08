@@ -1,12 +1,13 @@
 import requests
-# import chromecookies
-import os
+import chromecookies
+import os,re
+import json
 
 
 #http://cn.python-requests.org/zh_CN/latest/user/quickstart.html#id2
 #http://blog.csdn.net/jueblog/article/details/50442233
 
-user_number = '1588834507'
+user_number = '2419493220'
 target_dir = 'F:\code_test\python\spider\WeiboAnalbum\\'+ user_number
 
 def dest_File(path,name=''):
@@ -22,15 +23,17 @@ def dest_File(path,name=''):
 
 def save_image(image_url,name=''):
     response = requests.get(image_url,stream=True)
-    image = response.contant
+    image = response.content
     image_path = dest_File(image_url,name='')
     try:
+        with open(image_path,"wb") as jpg:
+            jpg.write(image)
+            print('save picture is completed ' + image_url)
+            return
+    except IOError:
+        print("shipai" + image_url)
+        return
         
-    except expression as identifier:
-        
 
-
-a = dest_File(target_dir)
-
-
-
+# if __name__ == '__main__':
+    
