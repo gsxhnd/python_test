@@ -6,13 +6,6 @@ import os
 #http://photo.weibo.com/albums/get_all?uid=1588834507&page=1&count=20
 #http://photo.weibo.com/photos/get_all?uid=1588834507&album_id=3575479750811822&count=30&page=1&type=3
 
-
-domain_name = '.weibo.com'
-
-
-
-        
-
 class analyze_json():
     def __init__(self, json_file_path = '', save_file = True,**key_url):
         """
@@ -37,24 +30,33 @@ class analyze_json():
         file_save.write(fp)
         file_save.close()
 
-    def read_json_file(self,json_file):
+    def read_json_file(self,json_file_path):
         """
         可以选择从保存的文件中读取json
         如果保留此功能，需要完善调用时的参数
         """
-        json_read = open(json_file_path,"r",encoding='utf-8').read()
-        json_content = json.loads(json_read)
+        json_read = open(json_file_path,"r",encoding='utf-8')
+        json_content = json.loads(json_read.read())
+        json_read.close()
         return(json_content)
 
     def get_ablum_data(self):
         album_conut = self.get_json_content["data"]["total"]
         album_info = self.get_json_content["data"]["album_list"]
+        album_data = []
+        for i in range(album_conut):
+            album_id_get  = album_info[i]["album_id"]
+            caption = album_info[i]["caption"]
+            album_data.append((caption,album_id_get))
+            
+        return(dict(album_data))
 
 
 if __name__ == '__main__':
     # url = 'http://photo.weibo.com/albums/get_all?uid=1588834507&page=1&count=20'
-    # a = get_json(url)
-    # json_file = 'page.json'
-    a = analyze_json(url,domain_name,save_file=False)
-    print(a)
+    # domain_name = '.weibo.com'
+    json_file = 'page.json'
+    a = analyze_json(json_file_path = 'page.json')
+    count_album = a.get_ablum_data()
+    print(count_album)
     
