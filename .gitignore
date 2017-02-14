@@ -2,4 +2,3 @@
 crypto/__init__.py
 __pycache__/*
 WeiboAnalbum/*
-page.json
