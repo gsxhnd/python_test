@@ -26,7 +26,7 @@ class get_json_file(self):
 class analyze_web():
     def __init__(self, json_file_path = '', save_file = True,**key_url):
         """
-        json_file_path 添加json的路径，如果存在会调用本地的json文件
+        json_file_path 添加json的路径，如果存在会调用本地的json文，如果不添加文件路径，则不会主动读取文件
         save_file 选择是否保存json文件，默认选择保存
         """
         if os.path.isfile(json_file_path):
@@ -35,8 +35,9 @@ class analyze_web():
             cookies = chromecookies.get_chrome_cookie(domain_name)
             response = requests.get(url, cookies=cookies)  
             html_doc = response.text.encode('gbk','ignore').decode('gbk')
-            self.get_json_content = json.loads(html_doc,encoding='gbk')
-            save_json = get_json_file.save_json_file(filename = json_file_path)
+            self.get_json_content = json.loads(html_doc,encoding='gbk')4
+            if save_file:
+                save_json = get_json_file.save_json_file(filename = json_file_path)
 
 
     def get_ablum_data(self):
