@@ -1,11 +1,12 @@
-import requests
-import chromecookies
-import analyze_sina
+# import requests
+# import chromecookies
+# import analyze_sina
 
-domain_name = ".weibo.com"
-url = "http://photo.weibo.com/photos/get_all?uid=1588834507&album_id=3575479750811822&count=30&page=1&type=3"
-cookie = chromecookies.get_chrome_cookie(domain_name)
-response = requests.get(url, cookies = cookie)  
-html_doc = response.text.encode('gbk','ignore').decode('gbk')
-print(html_doc)
-save_json = analyze_sina.get_json_file.save_json_file("photo.json",html_doc)
+# user_id = 5582985423
+# url = 'http://photo.weibo.com/albums/get_all?uid='+ str(user_id)
+# album_url = {"domain_name":".weibo.com","url":url}
+# get_album_json = analyze_sina.analyze_web(json_file_name = str(user_id)+'_album_data.json',save_file=False,**album_url)
+# data = get_album_json.html_doc
+# print(data)
+n = 1
+print(str(n+1))
