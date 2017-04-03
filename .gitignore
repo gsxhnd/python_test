@@ -1,4 +1,5 @@
 .vscode/launch.json
 crypto/__init__.py
 __pycache__/*
-WeiboAnalbum/*
+WeiboAnalbum/
+*.json

@@ -5,10 +5,15 @@ import os
 from math import ceil
 
 class get_json_file():
+    def __init__(self,user_id):
+        file_path = os.getcwd()
+        self.target_name = file_path +'\\'+user_id +'\\'
+
     def save_json_file(filename,json_data):
         """
         保存json文件
         """
+        file_full_path = sel
         file_save = open(filename,"w+",encoding='utf-8')
         # fp = json.dumps(json_data)
         file_save.write(json_data)
@@ -43,7 +48,7 @@ class analyze_web():
                 save_json = get_json_file.save_json_file(json_file_name,self.html_doc)
 
 
-    def get_ablum_data(self):
+    def analyze_ablum_data(self):
         album_total = self.html_doc["data"]["total"]
         album_list = self.html_doc["data"]["album_list"]
         album_data = []
@@ -52,13 +57,12 @@ class analyze_web():
             album_dict["album_id"] = album_list[i]["album_id"]
             album_dict["caption"] = album_list[i]["caption"]
             album_dict["album_number"] = str(i+1)
-            album_dict["amount_of_photos"] = album_list[i]["count"]["photos"]
             album_data.append(album_dict)
         return(album_data)
     
-    def get_photo_data(self):
+    def analyze_photo_data(self):
         #mw690
-        photo_total = self.html_doc["data"]["total"]
+        self.photo_total = self.html_doc["data"]["total"]
         photo_list = self.html_doc["data"]["photo_list"]
         photo_data = []
         for i in range(len(photo_list)):
@@ -70,29 +74,15 @@ class analyze_web():
             photo_data.append(photo_dict)
         return(photo_data)
 
-def check_page(photo_total):
-        page = ceil(photo_total/30)
+    def check_page(self):
+        page = ceil(self.photo_total/30)
         return(page)
-    
 
 if __name__ == '__main__':
-    user_id = 5582985423
-    url = 'http://photo.weibo.com/albums/get_all?uid='+ str(user_id)
-    domain_url = {"domain_name":".weibo.com","url":url}
-    get_album_json = analyze_web(json_file_name = str(user_id)+'_album_data.json',save_file=True,**domain_url)
-    album_data = get_album_json.get_ablum_data()
-    print(album_data)
-    for i in range(len(album_data)):
-        album_id = album_data[i]["album_id"]
-        caption = album_data[i]["caption"]
-        album_number = album_data[i]["album_number"]
-        photo_url = "http://photo.weibo.com/photos/get_all?uid=" + str(user_id) +"&album_id="+ str(album_id) +"&count=30&page=1&type=" + album_number
-        photo_url_dict = {"domain_name":".weibo.com","url":photo_url}
-        get_photo_json = analyze_web(json_file_name = str(user_id)+'_'+caption+"_page"+str(1)+'.json',save_file=True,**photo_url_dict)
-            
-        
-
-
-    # url = "http://photo.weibo.com/photos/get_all?uid=1588834507&album_id=3575479750811822&count=30&page=1&type=3"
-    # album_json = 'page.json'
-    # a = analyze_web(json_file_name = 'photo.json',domain_name = ".weibo.com",url = photo_json)
+    file_name = '123.txt'
+    data = '123'
+    file_path = os.getcwd()
+    print(file_path)
+    target_name = file_path+'\\'+file_name
+    print(target_name)
+    a = get_json_file.save_json_file(target_name,data)
