@@ -3,3 +3,4 @@ crypto/__init__.py
 __pycache__/
 WeiboAnalbum/
 *.json
+test/
