@@ -1,19 +1,65 @@
 import analyze_sina
+from os import getcwd
+from math import ceil
 
 class check_url():
-    def __init__(self,user_id):
-        self.album_url = 'http://photo.weibo.com/albums/get_all?uid=' + str(user_id)
-        photo_url = photo_url = "http://photo.weibo.com/photos/get_all?uid=" + str(user_id) +"&album_id="+ str(album_id) +"&count=30&page="+page_number+"&type=" + str(album_number)
+    def get_album_json(user_id):
+        album_url = 'http://photo.weibo.com/albums/get_all?uid=' + str(user_id)
+        custom_value = {}
+        custom_value["domain_name"] = ".weibo.com"
+        custom_value["url"] = album_url
+        custom_value["user_id"] = user_id
+        custom_value["json_file_path"]  = getcwd()
+        custom_value["json_file_name"] = str(user_id)+'_album_data.json'
+        json_full_name = custom_value["json_file_path"] + "\\" + str(user_id) + "\\" + custom_value["json_file_name"]
+        get_json = analyze_sina.analyze_web(save_file = True,**custom_value)
+        get_album_data = analyze_sina.analyze_json(json_full_name).analyze_ablum_data()
+        return(get_album_data)
+        
 
-    def get_album_json(self):
-        pass
+    def get_photo_json(user_id,album_id,caption,album_number):
+        page_number = 1
+        photo_url = "http://photo.weibo.com/photos/get_all?uid=" + str(user_id) +"&album_id="+ str(album_id) +"&count=30&page="+str(page_number)+"&type=" + str(album_number)
+        print(photo_url)
+        custom_value = {}
+        custom_value["domain_name"] = ".weibo.com"
+        custom_value["url"] = photo_url
+        custom_value["user_id"] = user_id
+        custom_value["json_file_path"]  = getcwd()
+        custom_value["json_file_name"] = str(user_id)+'_'+caption+str(page_number)+'.json'
+        json_full_name = custom_value["json_file_path"] + "\\" + str(user_id) + "\\" + custom_value["json_file_name"]
+        get_json = analyze_sina.analyze_web(save_file = True,**custom_value)
+        get_photo = analyze_sina.analyze_json(json_full_name)
+        get_photo_data = get_photo.analyze_photo_data()
+        get_photo_page = get_photo.check_page()
+        for i in range(2,get_photo_page+1):
+            page_number = i
+            photo_url = "http://photo.weibo.com/photos/get_all?uid=" + str(user_id) +"&album_id="+ str(album_id) +"&count=30&page="+str(page_number)+"&type=" + str(album_number)
+            custom_value["url"] = photo_url
+            custom_value["json_file_name"] = str(user_id)+'_'+caption+str(page_number)+'.json'
+            get_json = analyze_sina.analyze_web(save_file = True,**custom_value)
+        
+        return(get_photo_data)
 
-    def get_photo_json(parameter_list):
-        pass
+# def check_page(self):
+#         page = ceil(self.photo_total/30)
+#         return(page)
 
 
 if __name__ == '__main__':
-    user_id = 5582985423
+    user_id = 5582985423 
+    album_data = check_url.get_album_json(user_id)
+    print(album_data)
+    for i in range(len(album_data)):
+        album_id = album_data[i]["album_id"]
+        caption = album_data[i]["caption"]
+        album_number = album_data[i]["album_number"]
+        b = check_url.get_photo_json(user_id,album_id,caption,album_number)
+        
+     
+    
+    
+
 
     # url = 'http://photo.weibo.com/albums/get_all?uid='+ str(user_id)
     # domain_url = {"domain_name":".weibo.com","url":url}

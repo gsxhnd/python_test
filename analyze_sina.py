@@ -4,16 +4,15 @@ import json
 import os
 from math import ceil
 
-class get_json_file():
-    def __init__(self,user_id):
-        file_path = os.getcwd()
-        self.target_name = file_path +'\\'+user_id +'\\'
+class json_file():
+    # def __init__(self,user_id):
+    #     file_path = os.getcwd()
+    #     self.target_name = file_path +'\\'+user_id +'\\'
 
     def save_json_file(filename,json_data):
         """
         保存json文件
         """
-        file_full_path = sel
         file_save = open(filename,"w+",encoding='utf-8')
         # fp = json.dumps(json_data)
         file_save.write(json_data)
@@ -30,22 +29,42 @@ class get_json_file():
         return(json_content)
 
 class analyze_web():
-    def __init__(self, json_file_name = '', save_file = True,**key_url):
+    def __init__(self, save_file = True, **custom_value):
         """
+        custom_value["domain_name"]
+        custom_value["url"]
+        custom_value["user_id"]
+        custom_value["json_file_path"]
+        custom_value["json_file_name"] 
+
         json_file_name 添加json的路径，如果存在会调用本地的json文，如果不添加文件路径，则不会主动读取文件
         save_file 选择是否保存json文件，默认选择保存
         """
-        if os.path.isfile(json_file_name):
-            self.html_doc = get_json_file.read_json_file(json_file_name)
+
+        user_id = custom_value["user_id"]
+        json_file_path = custom_value["json_file_path"] 
+        json_file_name = custom_value["json_file_name"]
+        json_full_name = json_file_path + "\\" + str(user_id) + "\\" + json_file_name
+        if os.path.isdir(json_file_path + "\\" + str(user_id)):
+            pass
         else:
-            domain_name = key_url["domain_name"]
-            url = key_url["url"]
+            os.mkdir(json_file_path + "\\" + str(user_id) )
+
+        if os.path.isfile(json_full_name):
+            pass
+        else:
+            domain_name = custom_value["domain_name"]
+            url = custom_value["url"]
             cookies = chromecookies.get_chrome_cookie(domain_name)
             response = requests.get(url, cookies=cookies)  
             self.html_doc = response.text.encode('utf-8','ignore').decode('gbk')
             # print(response.text)
             if save_file:
-                save_json = get_json_file.save_json_file(json_file_name,self.html_doc)
+                save_json = json_file.save_json_file(json_full_name,self.html_doc)
+
+class analyze_json():
+    def __init__(self,json_file_name):
+        self.html_doc = json_file.read_json_file(json_file_name)
 
 
     def analyze_ablum_data(self):
@@ -79,10 +98,12 @@ class analyze_web():
         return(page)
 
 if __name__ == '__main__':
-    file_name = '123.txt'
-    data = '123'
-    file_path = os.getcwd()
-    print(file_path)
-    target_name = file_path+'\\'+file_name
-    print(target_name)
-    a = get_json_file.save_json_file(target_name,data)
+   a = "E:\\code_test\\python\\spider\\5582985423\\5582985423_头像相册1.json"
+   b = analyze_json(a)
+   c = b.analyze_photo_data()
+   d = b.check_page()
+   print(c)
+   print(d)
+
+   for i in range(1,d+1):
+       print(i)
