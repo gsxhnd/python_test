@@ -57,8 +57,8 @@ class analyze_web():
             url = custom_value["url"]
             cookies = chromecookies.get_chrome_cookie(domain_name)
             response = requests.get(url, cookies=cookies)  
-            self.html_doc = response.text.encode('utf-8','ignore').decode('gbk')
-            # print(response.text)
+            self.html_doc = response.text.encode('utf-8','ignore').decode('utf-8')
+            # print(self.html_doc)
             if save_file:
                 save_json = json_file.save_json_file(json_full_name,self.html_doc)
 
@@ -98,12 +98,10 @@ class analyze_json():
         return(page)
 
 if __name__ == '__main__':
-   a = "E:\\code_test\\python\\spider\\5582985423\\5582985423_头像相册1.json"
+   a = "E:\\code_test\\python\\spider\\2419493220\\2419493220_头像相册1.json"
    b = analyze_json(a)
    c = b.analyze_photo_data()
-   d = b.check_page()
    print(c)
-   print(d)
 
-   for i in range(1,d+1):
-       print(i)
+
+  
