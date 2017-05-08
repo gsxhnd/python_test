@@ -4,3 +4,6 @@ __pycache__/
 WeiboAnalbum/
 *.json
 test/
+dist/
+build/
+main.spec

@@ -1,8 +1,11 @@
 import subprocess
+from sqlite3.dbapi2 import *
+from _sqlite3 import *
 import sqlite3
 import re,os
 import requests
 import win32crypt
+
 
 def get_chrome_cookie(domain_name):
     dist_cookie_name = 'python_chrome_cookies'
@@ -19,4 +22,4 @@ def get_chrome_cookie(domain_name):
         ret_dict[row[1]] = ret[1].decode()
     conn.close()
     subprocess.call(['del',dist_cookie_name],shell=True)
-    return ret_dict    
+    return ret_dict

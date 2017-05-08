@@ -3,6 +3,9 @@ import chromecookies
 import json
 import os
 from math import ceil
+import requests.packages.urllib3
+import queue
+import requests.packages.idna.idnadata
 
 class json_file():
     # def __init__(self,user_id):
@@ -97,11 +100,7 @@ class analyze_json():
         page = ceil(self.photo_total/30)
         return(page)
 
-if __name__ == '__main__':
-   a = "E:\\code_test\\python\\spider\\2419493220\\2419493220_头像相册1.json"
-   b = analyze_json(a)
-   c = b.analyze_photo_data()
-   print(c)
+
 
 
   

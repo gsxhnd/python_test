@@ -1,5 +1,8 @@
 import requests
 import os
+import requests.packages.urllib3
+import queue
+import requests.packages.idna.idnadata
 
 def dest_File(path,name=''):
     if not os.path.isdir(target_dir):

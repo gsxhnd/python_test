@@ -2,6 +2,11 @@ from requests import get as re_get
 from analyze_sina import analyze_json
 from os import getcwd
 
+import requests.packages.urllib3
+import queue
+import requests.packages.idna.idnadata
+
+
 def download_img(json_name,userid,album_name):
     file_path = getcwd()
     full_filename = file_path + "\\"+ str(userid) +"\\"+ json_name

@@ -22,3 +22,4 @@ for h in range(len(json_list)):
         json_dir = json_list[h]["json_dir"]
         download = download_img.download_img(json_list[h]["json_name"][j],user_id,json_dir)
         print(download)
+input("Complete!")
