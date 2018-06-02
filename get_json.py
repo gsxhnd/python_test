@@ -1,12 +1,13 @@
 import analyze_sina
-from os import getcwd,mkdir,path
+from os import getcwd, mkdir, path
 
 from math import ceil
-
+albumsBASEURL = 'http://photo.weibo.com/albums/get_all?uid='
+photosBASEURL = 'http://photo.weibo.com/photos/get_all?uid='
 
 class check_url():
     def get_album_json(user_id):
-        album_url = 'http://photo.weibo.com/albums/get_all?uid=' + str(user_id)
+        album_url = albumsBASEURL + str(user_id)
         custom_value = {}
         custom_value["domain_name"] = ".weibo.com"
         custom_value["url"] = album_url
@@ -21,7 +22,8 @@ class check_url():
 
     def get_photo_json(user_id,album_id,caption,album_number):
         page_number = 1
-        photo_url = "http://photo.weibo.com/photos/get_all?uid=" + str(user_id) +"&album_id="+ str(album_id) +"&count=30&page="+str(page_number)+"&type=" + str(album_number)
+        photo_url = photosBASEURL + str(user_id) + "&album_id=" + str(album_id) + "&count=30&page=" + \
+                    str(page_number) + "&type=" + str(album_number)
         # print(photo_url)
         custom_value = {}
         custom_value["domain_name"] = ".weibo.com"
@@ -43,9 +45,11 @@ class check_url():
         json_list_json_name.append(custom_value["json_file_name"])
         # print(get_photo_page)
         if get_photo_page >= 2:
-            for i in range(2,get_photo_page+1):
+            for i in range(2, get_photo_page+1):
                 page_number = i
-                photo_url = "http://photo.weibo.com/photos/get_all?uid=" + str(user_id) +"&album_id="+ str(album_id) +"&count=30&page="+str(page_number)+"&type=" + str(album_number)
+
+                photo_url = photosBASEURL + str(user_id) + "&album_id=" + str(album_id) + "&count=30&page=" + \
+                            str(page_number) + "&type=" + str(album_number)
                 custom_value["url"] = photo_url
                 custom_value["json_file_name"] = str(user_id)+'_'+caption+str(page_number)+'.json'
                 get_json = analyze_sina.analyze_web(save_file = True,**custom_value)
@@ -57,8 +61,7 @@ class check_url():
             json_list["json_name"] = json_list_json_name
             json_list["json_dir"] = caption
             
-        return(json_list)
+        return json_list
 
 
 # if __name__ == '__main__':
- 

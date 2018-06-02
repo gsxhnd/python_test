@@ -7,6 +7,7 @@ import requests.packages.urllib3
 import queue
 import requests.packages.idna.idnadata
 
+
 class json_file():
     # def __init__(self,user_id):
     #     file_path = os.getcwd()
@@ -66,9 +67,8 @@ class analyze_web():
                 save_json = json_file.save_json_file(json_full_name,self.html_doc)
 
 class analyze_json():
-    def __init__(self,json_file_name):
+    def __init__(self, json_file_name):
         self.html_doc = json_file.read_json_file(json_file_name)
-
 
     def analyze_ablum_data(self):
         album_total = self.html_doc["data"]["total"]
@@ -80,10 +80,10 @@ class analyze_json():
             album_dict["caption"] = album_list[i]["caption"]
             album_dict["album_number"] = str(i+1)
             album_data.append(album_dict)
-        return(album_data)
-    
+        return album_dict
+
     def analyze_photo_data(self):
-        #mw690
+        # mw690
         self.photo_total = self.html_doc["data"]["total"]
         photo_list = self.html_doc["data"]["photo_list"]
         photo_data = []
@@ -94,13 +94,8 @@ class analyze_json():
             photo_dict["pic_name"] = photo_list[i]["pic_name"]
             photo_dict["timestamp"] = photo_list[i]["timestamp"]
             photo_data.append(photo_dict)
-        return(photo_data)
+        return photo_data
 
     def check_page(self):
         page = ceil(self.photo_total/30)
-        return(page)
-
-
-
-
-  
+        return page
