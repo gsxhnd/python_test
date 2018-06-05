@@ -1,2 +1,4 @@
-python_test
-# python_test
+# sina_spider
+
+Get photos from sina weibo
+
