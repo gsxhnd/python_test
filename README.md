@@ -1,4 +1,4 @@
 # sina_spider
 
-Get photos from sina weibo
+Get photos from sina ablum
 
